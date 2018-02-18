@@ -19,8 +19,8 @@ public interface BookDao extends JpaRepository<Book, Integer>, JpaSpecificationE
 	Book findBybookPrice(int price);
 	
 	
-	@Query("selkect i from Auhro i where i.author.id=?1")
-	List<Author> findByAuthorId(int id);
+	@Query("selkect i from Book i where i.author.id=?1")
+	List<Book> findByAuthorId(int id);
 	
 	
 	

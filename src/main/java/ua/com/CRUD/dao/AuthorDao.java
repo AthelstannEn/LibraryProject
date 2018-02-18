@@ -8,12 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import ua.com.entity.Author;
 
-public interface AuthoDao extends JpaRepository<Author, Integer>, JpaSpecificationExecutor<Author> {
+public interface AuthorDao extends JpaRepository<Author, Integer>, JpaSpecificationExecutor<Author> {
 	
 	
 	Author findByAuthor(String authorname);
 	
-	@Query("select i from Books i join i.book m where m.id=?1")
+	@Query("select i from Author i join i.book m where m.id=?1")
 	List<Author> findByBooksId(int id);
 
 }

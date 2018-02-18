@@ -19,13 +19,15 @@ public interface Book_Service {
 	
 	Book findOne(int id);
 	
-	void delte(int id);
+	void delete(int id);
 	
 	Book findBybookName(String bookName);
 	
 	Book findBybookPrice(int price);
 	
 	List<Book> findByAuthorId(int id);
+	
+	Book_Form findForm(int id);
 	
 	Book findUnique(String bookName, String price, Author author);
 	
