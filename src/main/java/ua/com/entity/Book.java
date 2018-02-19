@@ -1,11 +1,16 @@
 package ua.com.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -24,11 +29,12 @@ public class Book {
 
 	private int version;
 
-	
-	
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Author author;
+
+	@ManyToMany
+	@JoinTable(name = "user_books", joinColumns = @JoinColumn(name = "id_book"), inverseJoinColumns = @JoinColumn(name = "id_user"))
+	private List<User> users;
 
 	public Book() {
 		// TODO Auto-generated constructor stub
@@ -76,8 +82,6 @@ public class Book {
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	
-	
 
 	public Author getAuthor() {
 		return author;
@@ -85,6 +89,14 @@ public class Book {
 
 	public void setAuthor(Author author) {
 		this.author = author;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@Override
@@ -96,6 +108,7 @@ public class Book {
 				+ ((bookName == null) ? 0 : bookName.hashCode());
 		result = prime * result + id;
 		result = prime * result + price;
+		result = prime * result + ((users == null) ? 0 : users.hashCode());
 		result = prime * result + version;
 		return result;
 	}
@@ -123,6 +136,11 @@ public class Book {
 			return false;
 		if (price != other.price)
 			return false;
+		if (users == null) {
+			if (other.users != null)
+				return false;
+		} else if (!users.equals(other.users))
+			return false;
 		if (version != other.version)
 			return false;
 		return true;
@@ -131,12 +149,8 @@ public class Book {
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", bookName=" + bookName + ", price=" + price
-				+ ", version=" + version + ", author=" + author + "]";
+				+ ", version=" + version + ", author=" + author + ", users="
+				+ users + "]";
 	}
-	
-	
-	
-	
-	
-	
+
 }
