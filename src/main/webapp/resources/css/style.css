@@ -1,0 +1,76 @@
+*{
+	margin:0;
+	padding:0;
+}
+
+.header{
+	position:fixed;
+	width:100%;
+	left:0px;
+	top:0px;
+	z-index:1;
+}
+
+.tblbrd{
+	border: 2px solid;
+	border-width: 2px;
+	border-color:white;
+	width: 30%;
+}
+
+
+.ShopNow:hover{
+	background-color:white;
+	text-decoration:none;
+	color: black;
+}
+.ShopNow{
+	background-color:black;
+	float:right;
+	display:block;
+	margin-right:220px;
+	margin-top:7px;
+	 border: 3px solid #fff;
+    padding: 12px;
+	font-size:14pt; 
+	text-decoration:none;
+	color:white;
+}
+.shadows:hover{
+	background-color:white;
+	
+}
+.shadows{
+	background-color:black;
+	height:400px;
+	width:400px;
+	
+}
+.mainAdv{
+	margin-top:55px;
+	
+}
+.bodyCat{
+	margin-top:-25px;
+}
+.mainSpace{
+	margin-bottom:50px;
+}
+.mainFreedom{
+	margin-top:300px;
+	margin-left:50px;
+}
+.steamMachine{
+	margin-left:450px;
+	margin-top:-500px;
+	margin-bottom:-150px;
+}
+.buttonn{
+	margin-left:-110px;
+	
+}
+.botText{
+	margin-left:300px;
+	margin-right:300px;
+}
+

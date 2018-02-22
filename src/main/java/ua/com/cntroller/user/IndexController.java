@@ -15,6 +15,7 @@ import ua.com.dto.filter.BookFilter;
 import ua.com.entity.Items;
 import ua.com.service.Author_Service;
 import ua.com.service.Book_Service;
+import ua.com.service.ItemsService;
 import ua.com.service.User_Service;
 
 
@@ -29,6 +30,9 @@ public class IndexController {
 	@Autowired
 	private User_Service userService;
 
+	@Autowired
+	private ItemsService itemService;
+	
 	@ModelAttribute("filter")
 	private BookFilter getFilter(){
 		return new BookFilter();
@@ -39,7 +43,7 @@ public class IndexController {
 		return "user-people";
 	}
 	
-	
+
 	@RequestMapping("/user/hustleMain")
 	public String index(@PathVariable int id, Principal principal, Model model ){
 		if(principal!=null){
@@ -57,11 +61,11 @@ public class IndexController {
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
 		}	
-		model.addAttribute("types",bookService.findAll() );
+		model.addAttribute("types",authorService.findAll() );
 		return "user-hustleMain";
 	}
 	
-	// work w/ ("/RegForm") or w/o ??//?? 
+	
 	@RequestMapping("/RegForm")
 	public String regForm(Principal principal, Model model){
 		if(principal!=null){
@@ -72,6 +76,7 @@ public class IndexController {
 	}
 	
 
+	
 	@RequestMapping("/admin/goodModels")
 	public String adminPage(Model model, Principal principal){
 		if(principal!=null){
@@ -87,26 +92,26 @@ public class IndexController {
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
 		}
-		model.addAttribute("types",bookService.findAll() );
+		model.addAttribute("types",authorService.findAll() );
 		return "user-hustleMain";
 	}	
 	
 	
 	@RequestMapping("/type/{id}")
 	public String typeModelSearch(@PathVariable int id, Model model , Principal principal){
-		model.addAttribute("books", bookService.findAll());
-		model.addAttribute("author", bookService.findOne(id));
-		
+		model.addAttribute("types", authorService.findAll());
+		model.addAttribute("type", authorService.findOne(id));
+		model.addAttribute("models",  bookService.findByAuthorId(id));
 		if(principal!=null){
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
 		}
-		return "user-fromBooks";
+		return "user-fromTypeToModels";
 	}
 	
 	@RequestMapping("//model/")
 	public String goodModel(Model model, Principal principal){
-		model.addAttribute("books", bookService.findAll());
+		model.addAttribute("models", bookService.findAll());
 		if(principal!=null){
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
@@ -116,9 +121,11 @@ public class IndexController {
 	
 	@RequestMapping("/model/{id}")
 	public String modelGoodSearch(@PathVariable int id, Model model, Principal principal){
-		model.addAttribute("books", bookService.findAll());
-		model.addAttribute("author", authorService.findOne(id));
-		
+		model.addAttribute("types", authorService.findAll());
+		model.addAttribute("model", bookService.findOne(id));
+	
+	//	model.addAttribute("goods", goodService.findByModelId(id));
+	
 		if(principal!=null){
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
@@ -138,8 +145,8 @@ public class IndexController {
 		if(principal!=null){
 			System.out.println(principal.getName());
 			item.setUserName(principal.getName());
-			item.setGoodName(goodModelService.findOne(id).getModelName());
-			item.setTotalPrice(goodModelService.findOne(id).getPrice()*item.getQuantity());
+			item.setGoodName(bookService.findOne(id).getBookName());
+			item.setTotalPrice(bookService.findOne(id).getPrice()*item.getQuantity());
 			item.setFullName(userService.findByEmail(principal.getName()).getFullName());
 			item.setDeliveryAddressCountry(userService.findByEmail(principal.getName()).getDeliveryAddressCountry());
 			item.setDeliveryAddressCity(userService.findByEmail(principal.getName()).getDeliveryAddressCity());
@@ -156,7 +163,7 @@ public class IndexController {
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
 		}
-		model.addAttribute("types",bookService.findAll() );
+		model.addAttribute("types",authorService.findAll() );
 		return "user-supportArea";
 	}
 	
@@ -166,7 +173,7 @@ public class IndexController {
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
 		}
-		model.addAttribute("types",bookService.findAll() );
+		model.addAttribute("types",authorService.findAll() );
 		return "user-warrantyAndUpgrade";
 	}
 	
@@ -176,7 +183,7 @@ public class IndexController {
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
 		}
-		model.addAttribute("types",bookService.findAll() );
+		model.addAttribute("types",authorService.findAll() );
 		return "user-giftCards";
 	}
 	
@@ -187,19 +194,18 @@ public class IndexController {
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
 		}
-		model.addAttribute("types",bookService.findAll() );
+		model.addAttribute("types",authorService.findAll() );
 		return "user-advReward";
 	}
 	
 	
 	@RequestMapping("/hustleDeals")
 	public String hustleDeals(Model model, Principal principal){
-		model.addAttribute("types", bookService.findAll());
+		model.addAttribute("types", authorService.findAll());
 		if(principal!=null){
 			System.out.println(principal.getName());
 			model.addAttribute("username", principal.getName());
 		}
 		return "user-hustleDeals";
 	}
-	
 }
